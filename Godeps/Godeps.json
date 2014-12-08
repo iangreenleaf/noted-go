@@ -1,0 +1,16 @@
+{
+	"ImportPath": "iangreenleaf/noted",
+	"GoVersion": "go1.3.3",
+	"Deps": [
+		{
+			"ImportPath": "github.com/codegangsta/inject",
+			"Comment": "v1.0-rc1-4-g4b81725",
+			"Rev": "4b8172520a03fa190f427bbd284db01b459bfce7"
+		},
+		{
+			"ImportPath": "github.com/go-martini/martini",
+			"Comment": "v1.0-66-gc5d72ac",
+			"Rev": "c5d72ac59a90415b10640d48621cdbe2907cc525"
+		}
+	]
+}
