@@ -14,16 +14,14 @@ func main() {
   m.Get("/", func() string {
     return "Hello world!"
   })
-  m.Get("/notes", func(res http.ResponseWriter, req *http.Request) string {
+  m.Get("/notes", func() (int, string) {
     notes := []Note{
       Note{"First note", "Get the milk"},
       Note{"Second note", "Buy bread"},
     }
     js, err := json.Marshal(notes)
-    if err != nil { return err.Error() }
-    res.Write(js)
-    res.WriteHeader(200)
-    return ""
+    if err != nil { return 500, err.Error() }
+    return http.StatusOK, string(js)
   })
   m.Run()
 }
