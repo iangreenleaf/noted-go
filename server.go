@@ -1,9 +1,11 @@
 package main
 
-import "github.com/go-martini/martini"
-import "encoding/json"
-import "net/http"
-import "iangreenleaf/noted/models"
+import (
+	"encoding/json"
+	"github.com/go-martini/martini"
+	"iangreenleaf/noted/models"
+	"net/http"
+)
 
 func main() {
 	m := martini.Classic()
@@ -11,10 +13,7 @@ func main() {
 		return "Hello world!"
 	})
 	m.Get("/notes", func() (int, string) {
-		notes := []models.Note{
-			models.Note{"First note", "Get the milk"},
-			models.Note{"Second note", "Buy bread"},
-		}
+		notes := models.AllNotes()
 		js, err := json.Marshal(notes)
 		if err != nil {
 			return 500, err.Error()
