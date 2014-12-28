@@ -1,4 +1,4 @@
-package models
+package notes
 
 import "iangreenleaf/noted/db"
 
