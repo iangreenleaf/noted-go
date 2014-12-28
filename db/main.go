@@ -1,13 +1,14 @@
 package db
 
 import (
+	"fmt"
 	"database/sql"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/go-martini/martini"
 )
 
-func NewDB() *sql.DB {
-	db, err := sql.Open("sqlite3", "db.sqlite3")
+func NewDB(name string) *sql.DB {
+	db, err := sql.Open("sqlite3", fmt.Sprintf("db-%s.sqlite3", name))
 	if err != nil {
 		panic(err)
 	}

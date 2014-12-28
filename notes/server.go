@@ -8,9 +8,9 @@ import (
 	"database/sql"
 )
 
-func NewServer() *martini.ClassicMartini {
+func NewServer(mydb *sql.DB) *martini.ClassicMartini {
 	m := martini.Classic()
-	m.Use(db.DBHandler(db.NewDB()))
+	m.Use(db.DBHandler(mydb))
 	m.Get("/", func() string {
 		return "Hello world!"
 	})

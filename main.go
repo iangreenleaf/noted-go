@@ -2,9 +2,11 @@ package main
 
 import (
 	"iangreenleaf/noted/notes"
+	"iangreenleaf/noted/db"
 )
 
 func main() {
-  m := notes.NewServer()
+	mydb := db.NewDB("development")
+  m := notes.NewServer(mydb)
 	m.Run()
 }
