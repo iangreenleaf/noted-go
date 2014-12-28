@@ -4,15 +4,18 @@ import (
 	"encoding/json"
 	"github.com/go-martini/martini"
 	"net/http"
+	"iangreenleaf/noted/db"
+	"database/sql"
 )
 
 func NewServer() *martini.ClassicMartini {
 	m := martini.Classic()
+	m.Use(db.DBHandler(db.NewDB()))
 	m.Get("/", func() string {
 		return "Hello world!"
 	})
-	m.Get("/notes", func() (int, string) {
-		notes := AllNotes()
+	m.Get("/notes", func(db *sql.DB) (int, string) {
+		notes := AllNotes(db)
 		js, err := json.Marshal(notes)
 		if err != nil {
 			return 500, err.Error()

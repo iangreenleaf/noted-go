@@ -1,14 +1,14 @@
 package notes
 
-import "iangreenleaf/noted/db"
+import "database/sql"
 
 type Note struct {
 	Title string `json:"title"`
 	Text  string `json:"text"`
 }
 
-func AllNotes() []Note {
-	rows, err := db.NewDB().Query("SELECT * FROM notes")
+func AllNotes(db *sql.DB) []Note {
+	rows, err := db.Query("SELECT * FROM notes")
 	if err != nil {
 		panic(err)
 	}
