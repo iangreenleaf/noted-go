@@ -1,6 +1,6 @@
 package main
 
-import "iangreenleaf/noted/db"
+import "github.com/iangreenleaf/noted-go/db"
 
 func main() {
 	mydb := db.NewDB("development")
