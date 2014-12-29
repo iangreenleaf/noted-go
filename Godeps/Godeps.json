@@ -1,5 +1,5 @@
 {
-	"ImportPath": "iangreenleaf/noted",
+	"ImportPath": "github.com/iangreenleaf/noted-go",
 	"GoVersion": "go1.3.3",
 	"Deps": [
 		{

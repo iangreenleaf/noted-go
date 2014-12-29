@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"iangreenleaf/noted/notes"
-	"iangreenleaf/noted/db"
+	"github.com/iangreenleaf/noted-go/notes"
+	"github.com/iangreenleaf/noted-go/db"
 )
 
 func main() {

@@ -4,7 +4,7 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/go-martini/martini"
-	"iangreenleaf/noted/db"
+	"github.com/iangreenleaf/noted-go/db"
 	"net/http"
 	"net/http/httptest"
 )

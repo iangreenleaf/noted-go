@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"github.com/go-martini/martini"
 	"net/http"
-	"iangreenleaf/noted/db"
+	"github.com/iangreenleaf/noted-go/db"
 	"database/sql"
 )
 
