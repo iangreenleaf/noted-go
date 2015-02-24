@@ -51,4 +51,40 @@ var _ = Describe("Notes/Server", func() {
 			Expect(recorder.Body.Bytes()).To(MatchJSON(expected))
 		})
 	})
+
+	Describe("Tomboy API", func() {
+		var note1 *Note
+		var note2 *Note
+
+		BeforeEach(func() {
+			note1 = &Note{0, "test note 1", "abcdefg"}
+			dbmap.Insert(note1)
+			note2 = &Note{0, "test note 2", "hijk lmnop"}
+			dbmap.Insert(note2)
+		})
+
+		Describe("root", func() {
+			Describe("unauthenticated", func() {
+				BeforeEach(func() {
+					request, _ = http.NewRequest("GET", "http://me.test/tomboy/api/1.0", nil)
+				})
+
+				It("is successful", func() {
+					server.ServeHTTP(recorder, request)
+					Expect(recorder.Code).To(Equal(200))
+				})
+
+				It("returns JSON", func() {
+					server.ServeHTTP(recorder, request)
+					expected := fmt.Sprintf(`{
+					"oauth_request_token_url": "http://me.test/oauth/request_token",
+					"oauth_authorize_url": "http://me.test/oauth/authorize",
+					"oauth_access_token_url": "http://me.test/oauth/access_token",
+					"api-version": "1.0"
+				}`)
+					Expect(recorder.Body.Bytes()).To(MatchJSON(expected))
+				})
+			})
+		})
+	})
 })
