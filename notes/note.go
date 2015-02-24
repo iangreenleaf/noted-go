@@ -1,6 +1,15 @@
 package notes
 
-import "database/sql"
+import (
+	"database/sql"
+	"gopkg.in/gorp.v1"
+)
+
+func NotesMap(db *sql.DB) *gorp.DbMap {
+	dbmap := &gorp.DbMap{Db: db, Dialect: gorp.SqliteDialect{}}
+	dbmap.AddTableWithName(Note{}, "notes")
+	return dbmap
+}
 
 type Note struct {
 	Title string `json:"title"`

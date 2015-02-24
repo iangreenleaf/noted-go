@@ -15,9 +15,11 @@ var _ = Describe("Notes/Server", func() {
 	var request *http.Request
 
 	mydb := db.NewDB(":memory:")
+	dbmap := NotesMap(mydb)
+	dbmap.CreateTablesIfNotExists()
 
 	BeforeEach(func() {
-		db.RecreateTables(mydb)
+		dbmap.TruncateTables()
 		server = NewServer(mydb)
 		recorder = httptest.NewRecorder()
 	})
@@ -25,7 +27,8 @@ var _ = Describe("Notes/Server", func() {
 	Describe("#index", func() {
 		BeforeEach(func() {
 			request, _ = http.NewRequest("GET", "/notes", nil)
-			mydb.Exec("INSERT INTO notes (title, text) VALUES ('test note 1', 'abcdefg'), ('test note 2', 'hijk lmnop')")
+			dbmap.Insert(&Note{"test note 1", "abcdefg"})
+			dbmap.Insert(&Note{"test note 2", "hijk lmnop"})
 		})
 
 		It("is successful", func() {
