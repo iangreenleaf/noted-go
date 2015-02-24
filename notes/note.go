@@ -7,26 +7,26 @@ import (
 
 func NotesMap(db *sql.DB) *gorp.DbMap {
 	dbmap := &gorp.DbMap{Db: db, Dialect: gorp.SqliteDialect{}}
-	dbmap.AddTableWithName(Note{}, "notes")
+	dbmap.AddTableWithName(Note{}, "notes").SetKeys(true, "Id")
 	return dbmap
 }
 
 type Note struct {
+	Id    int64  `json:"id"`
 	Title string `json:"title"`
 	Text  string `json:"text"`
 }
 
-func AllNotes(db *sql.DB) []Note {
-	rows, err := db.Query("SELECT * FROM notes")
+func newNote(title string, text string) *Note {
+	return &Note{0, title, text}
+}
+
+func AllNotes(db *gorp.DbMap) []Note {
+	var notes []Note
+	_, err := db.Select(&notes, "SELECT * FROM notes")
 	if err != nil {
 		panic(err)
 	}
 
-	var title, text string
-	result := make([]Note, 0, 100)
-	for rows.Next() {
-		rows.Scan(&title, &text)
-		result = append(result, Note{title, text})
-	}
-	return result
+	return notes
 }
