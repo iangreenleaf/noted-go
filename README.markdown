@@ -5,3 +5,23 @@
 # Noted #
 
 Hopefully this becomes a note-taking app.
+
+## Setup ##
+
+```
+godep go run cmd/dbsetup/main.go
+```
+
+## Run ##
+
+Install `gin`.
+
+```
+gin main.go
+```
+
+## Run tests ##
+
+```
+godep go test ./...
+```
