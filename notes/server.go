@@ -32,12 +32,15 @@ func NewServer(mydb *sql.DB) *martini.ClassicMartini {
 		makeURL := func(path string) string {
 			u := url.URL{
 				req.URL.Scheme,
-				req.URL.Opaque,
+				"",
 				req.URL.User,
-				req.URL.Host,
+				req.Host,
 				path,
 				"",
 				"",
+			}
+			if u.Scheme == "" {
+				u.Scheme = "http"
 			}
 			return u.String()
 		}
