@@ -69,6 +69,32 @@ var _ = Describe("Notes/Server", func() {
 		})
 
 		Describe("root", func() {
+			Describe("authenticated", func() {
+				BeforeEach(func() {
+					request, _ = http.NewRequest("GET", "http://me.test/tomboy/api/1.0", nil)
+				})
+
+				It("is successful", func() {
+					server.ServeHTTP(recorder, request)
+					Expect(recorder.Code).To(Equal(200))
+				})
+
+				It("returns JSON", func() {
+					server.ServeHTTP(recorder, request)
+					expected := fmt.Sprintf(`{
+						"user-ref": {
+							"api-ref" : "http://me.test/tomboy/api/1.0/sally",
+							"href" : "http://me.test/tomboy/sally"
+						},
+						"oauth_request_token_url": "http://me.test/oauth/request_token",
+						"oauth_authorize_url": "http://me.test/oauth/authorize",
+						"oauth_access_token_url": "http://me.test/oauth/access_token",
+						"api-version": "1.0"
+					}`)
+					Expect(recorder.Body.Bytes()).To(MatchJSON(expected))
+				})
+			})
+
 			Describe("unauthenticated", func() {
 				BeforeEach(func() {
 					request, _ = http.NewRequest("GET", "http://me.test/tomboy/api/1.0", nil)

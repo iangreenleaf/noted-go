@@ -2,8 +2,8 @@ package db
 
 import (
 	"database/sql"
-	_ "github.com/mattn/go-sqlite3"
 	"github.com/go-martini/martini"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func NewDB(name string) *sql.DB {

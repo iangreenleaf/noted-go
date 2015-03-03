@@ -2,7 +2,7 @@ package notes
 
 import (
 	"database/sql"
-	"github.com/go-martini/martini"
+	"github.com/RangelReale/osin"
 	"github.com/martini-contrib/render"
 	"gopkg.in/gorp.v1"
 	"net/http"
@@ -57,6 +57,38 @@ func NewServer(mydb *sql.DB) *martini.ClassicMartini {
 		}
 		r.JSON(http.StatusOK, response)
 	})
+
+	// TestStorage implements the "osin.Storage" interface
+	oauthServer := osin.NewServer(osin.NewServerConfig(), &TestStorage{})
+
+	// Authorization code endpoint
+	http.HandleFunc("/authorize", func(w http.ResponseWriter, r *http.Request) {
+		resp := oauthServer.NewResponse()
+		defer resp.Close()
+
+		if ar := oauthServer.HandleAuthorizeRequest(resp, r); ar != nil {
+
+			// HANDLE LOGIN PAGE HERE
+
+			ar.Authorized = true
+			oauthServer.FinishAuthorizeRequest(resp, r, ar)
+		}
+		osin.OutputJSON(resp, w, r)
+	})
+
+	// Access token endpoint
+	http.HandleFunc("/token", func(w http.ResponseWriter, r *http.Request) {
+		resp := oauthServer.NewResponse()
+		defer resp.Close()
+
+		if ar := oauthServer.HandleAccessRequest(resp, r); ar != nil {
+			ar.Authorized = true
+			oauthServer.FinishAccessRequest(resp, r, ar)
+		}
+		osin.OutputJSON(resp, w, r)
+	})
+
+	http.ListenAndServe(":14000", nil)
 
 	return m
 }
