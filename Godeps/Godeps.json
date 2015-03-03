@@ -1,6 +1,6 @@
 {
 	"ImportPath": "github.com/iangreenleaf/noted-go",
-	"GoVersion": "go1.3.3",
+	"GoVersion": "go1.4.2",
 	"Deps": [
 		{
 			"ImportPath": "github.com/codegangsta/inject",
@@ -13,18 +13,21 @@
 			"Rev": "c5d72ac59a90415b10640d48621cdbe2907cc525"
 		},
 		{
+			"ImportPath": "github.com/martini-contrib/render",
+			"Rev": "b65063311fac6cbf84d3538f5715f7847e648322"
+		},
+		{
 			"ImportPath": "github.com/mattn/go-sqlite3",
 			"Rev": "4c5aec8622e1523fa8f82a2ecb1a20cb039a33ec"
 		},
 		{
-			"ImportPath": "github.com/onsi/ginkgo",
-			"Comment": "v1.1.0-32-g291f28e",
-			"Rev": "291f28e66dd277f35d3635990a7448759645c7e7"
+			"ImportPath": "github.com/oxtoacart/bpool",
+			"Rev": "89c3c7319abbd041bc0a83bdf10bcb8bd445287b"
 		},
 		{
-			"ImportPath": "github.com/onsi/gomega",
-			"Comment": "v1.0-28-g8adf9e1",
-			"Rev": "8adf9e1730c55cdc590de7d49766cb2acc88d8f2"
+			"ImportPath": "gopkg.in/gorp.v1",
+			"Comment": "v1.7.1",
+			"Rev": "c87af80f3cc5036b55b83d77171e156791085e2e"
 		}
 	]
 }

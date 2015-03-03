@@ -1,11 +1,11 @@
 package notes
 
 import (
+	"fmt"
 	"github.com/go-martini/martini"
 	"github.com/iangreenleaf/noted-go/db"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"fmt"
 	"net/http"
 	"net/http/httptest"
 )
