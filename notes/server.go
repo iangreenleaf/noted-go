@@ -2,8 +2,8 @@ package notes
 
 import (
 	"database/sql"
-	"encoding/json"
 	"github.com/go-martini/martini"
+	"github.com/martini-contrib/render"
 	"gopkg.in/gorp.v1"
 	"net/http"
 	"net/url"
@@ -19,19 +19,16 @@ func NotesMapHandler(db *sql.DB) martini.Handler {
 func NewServer(mydb *sql.DB) *martini.ClassicMartini {
 	m := martini.Classic()
 	m.Use(NotesMapHandler(mydb))
+	m.Use(render.Renderer())
 	m.Get("/", func() string {
 		return "Hello world!"
 	})
-	m.Get("/notes", func(db *gorp.DbMap) (int, string) {
+	m.Get("/notes", func(db *gorp.DbMap, r render.Render) {
 		notes := AllNotes(db)
-		js, err := json.Marshal(notes)
-		if err != nil {
-			return 500, err.Error()
-		}
-		return http.StatusOK, string(js)
+		r.JSON(http.StatusOK, notes)
 	})
 
-	m.Get("/tomboy/api/1.0", func(db *gorp.DbMap, req *http.Request) (int, string) {
+	m.Get("/tomboy/api/1.0", func(db *gorp.DbMap, req *http.Request, r render.Render) {
 		makeURL := func(path string) string {
 			u := url.URL{
 				req.URL.Scheme,
@@ -55,11 +52,7 @@ func NewServer(mydb *sql.DB) *martini.ClassicMartini {
 			makeURL("/oauth/access_token"),
 			"1.0",
 		}
-		responseJSON, err := json.Marshal(response)
-		if err != nil {
-			return 500, err.Error()
-		}
-		return http.StatusOK, string(responseJSON)
+		r.JSON(http.StatusOK, response)
 	})
 
 	return m

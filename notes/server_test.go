@@ -44,6 +44,11 @@ var _ = Describe("Notes/Server", func() {
 
 		It("returns JSON", func() {
 			server.ServeHTTP(recorder, request)
+			Expect(recorder.Header().Get("Content-Type")).To(HavePrefix("application/json"))
+		})
+
+		It("returns data in body", func() {
+			server.ServeHTTP(recorder, request)
 			expected := fmt.Sprintf(`[
 				{ "id": %d, "title": "test note 1", "text": "abcdefg" },
 				{ "id": %d, "title": "test note 2", "text": "hijk lmnop" }
@@ -75,6 +80,11 @@ var _ = Describe("Notes/Server", func() {
 				})
 
 				It("returns JSON", func() {
+					server.ServeHTTP(recorder, request)
+					Expect(recorder.Header().Get("Content-Type")).To(HavePrefix("application/json"))
+				})
+
+				It("returns data in body", func() {
 					server.ServeHTTP(recorder, request)
 					expected := fmt.Sprintf(`{
 					"oauth_request_token_url": "http://me.test/oauth/request_token",
